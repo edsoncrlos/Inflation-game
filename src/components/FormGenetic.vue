@@ -7,6 +7,8 @@ const emit = defineEmits<{
     (e: 'newGenetic', parameters: Parameters): void
 }>();
 
+const props = defineProps(['isRunPopulation']);
+
 const populationSize = ref(100);
 const generationSize = ref(100);
 const mutation_rate = ref(3);
@@ -34,12 +36,12 @@ function submit() {
     <form @submit.prevent="submit">
         <div class="genetic_input">
             <label for="populationSize">Tamanho da população</label>
-            <input v-model="populationSize" type="number" min="0" max="1000"
+            <input v-model="populationSize" type="number" min="0" max="10000"
                 name="populationSize" id="populationSize">
         </div>
         <div class="genetic_input">
             <label for="generationSize">Quantidade de gerações</label>
-            <input v-model="generationSize" type="number" min="0" max="1000"
+            <input v-model="generationSize" type="number" min="0" max="10000"
                 name="generationSize" id="generationSize">
         </div>
         <div class="genetic_input">
@@ -58,7 +60,10 @@ function submit() {
                 name="penality_rate" id="penality_rate">
         </div>
 
-        <button @submit="">Calcular solução</button>
+        <button :disabled="props.isRunPopulation">
+            {{  isRunPopulation? 'executando' : 'Calcular solução' }}
+        </button>
+
     </form>
 </template>
 
